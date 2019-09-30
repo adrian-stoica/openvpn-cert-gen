@@ -1,11 +1,59 @@
 #!/usr/bin/env python
 import os
 
-easyrsaPath = "/etc/openvpn/easy-rsa"
+easyrsaPath = "/etc/openvpn/easy-rsa/"
 username = raw_input("Type the username: ")
 
 #Generate Keys
 genKeys = os.system("cd "+easyrsaPath+"; source ./vars; ./pkitool "+username)
 
 #Generate ovpn file
-print (genKeys)
+ovpnf=open(easyrsaPath+"keys/"+username+".ovpn","w+")
+caf=open(easyrsaPath+"keys/ca.crt","r")
+crtf=open(easyrsaPath+"keys/"+username+".crt","r")
+keyf=open(easyrsaPath+"keys/"+username+".key","r")
+writeline=0
+config='''client
+dev tun
+proto tcp-client
+remote vpn.adrianstoica.de 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+mute-replay-warnings
+cipher AES-256-CBC
+ns-cert-type server
+comp-lzo adaptive
+redirect-gateway def1'''
+ovpnf.write(config)
+ovpnf.close()
+ovpnf=open(easyrsaPath+"keys/"+username+".ovpn","a")
+for line in caf:
+  if "BEGIN CERTIFICATE" in line:
+    writeline=1
+    ovpnf.write("<ca>\n\r-----BEGIN CERTIFICATE-----\n\r")
+  elif writeline==1:
+    ovpnf.write(line)
+  elif "END CERTIFICATE" in line:
+    writeline=0
+    ovpnf.write("-----END CERTIFICATE-----\n\r</ca>\n\r")
+for line in crtf:
+  if "BEGIN CERTIFICATE" in line:
+    writeline=1
+    ovpnf.write("<cert>\n\r-----BEGIN CERTIFICATE-----\n\r")
+  elif writeline==1:
+    ovpnf.write(line)
+  elif "END CERTIFICATE" in line:
+    writeline=0
+    ovpnf.write("-----END CERTIFICATE-----\n\r</cert>\n\r")
+for line in keyf:
+  if "BEGIN CERTIFICATE" in line:
+    writeline=1
+    ovpnf.write("<key>\n\r-----BEGIN CERTIFICATE-----\n\r")
+  elif writeline==1:
+    ovpnf.write(line)
+  elif "END CERTIFICATE" in line:
+    writeline=0
+    ovpnf.write("-----END CERTIFICATE-----\n\r</key>\n\r")
+ovpnf.close()
