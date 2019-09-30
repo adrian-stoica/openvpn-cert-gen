@@ -31,33 +31,40 @@ ovpnf.write(config)
 ovpnf.close()
 ovpnf=open(easyrsaPath+"keys/"+username+".ovpn","a")
 for line in caf:
+  writeline=0
   if "BEGIN CERTIFICATE" in line:
     writeline=1
-    ovpnf.write("<ca>\n-----BEGIN CERTIFICATE-----\n")
+    ovpnf.write("<ca>\n")
+    ovpnf.write("-----BEGIN CERTIFICATE-----\n")
   elif writeline==1:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
-    writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n<\/ca>\n")
+    ovpnf.write("-----END CERTIFICATE-----\n")
+    ovpnf.write("</ca>\n")
     break
 for line in crtf:
+  writeline=0
   if "BEGIN CERTIFICATE" in line:
     writeline=1
-    ovpnf.write("<cert>\n-----BEGIN CERTIFICATE-----\n")
+    ovpnf.write("<cert>\n")
+    ovpnf.write("-----BEGIN CERTIFICATE-----\n")
   elif writeline==1:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
-    writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n<\/cert>\n")
+    ovpnf.write("-----END CERTIFICATE-----\n")
+    ovpnf.write("</cert>\n")
     break
 for line in keyf:
+  writeline=0
   if "BEGIN CERTIFICATE" in line:
     writeline=1
-    ovpnf.write("<key>\n-----BEGIN CERTIFICATE-----\n")
+    ovpnf.write("<key>")
+    ovpnf.write("-----BEGIN PRIVATE KEY-----\n")
   elif writeline==1:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n<\/key>\n")
+    ovpnf.write("-----END PRIVATE KEY-----\n")
+    ovpnf.write("</key>\n")
     break
 ovpnf.close()
