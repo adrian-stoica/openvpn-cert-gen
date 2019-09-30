@@ -5,4 +5,4 @@ easyrsaPath = "/etc/openvpn/easy-rsa"
 username = raw_input("Type the username: ")
 
 #Generate Keys
-os.system("/etc/openvpn/easy-rsa/pkitool "+username)
+os.system("cd "+easyrsaPath+"; source ./vars; pkitool "+username)
