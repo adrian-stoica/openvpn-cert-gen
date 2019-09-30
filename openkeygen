@@ -34,36 +34,30 @@ for line in caf:
   if "BEGIN CERTIFICATE" in line:
     writeline=1
     ovpnf.write("<ca>\n")
-    ovpnf.write("-----BEGIN CERTIFICATE-----\n")
   if writeline==1:
     ovpnf.write(line)
   if "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n")
     ovpnf.write("</ca>\n")
     break
 for line in crtf:
   if "BEGIN CERTIFICATE" in line:
     writeline=1
     ovpnf.write("<cert>\n")
-    ovpnf.write("-----BEGIN CERTIFICATE-----\n")
   if writeline==1:
     ovpnf.write(line)
   if "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n")
     ovpnf.write("</cert>\n")
     break
 for line in keyf:
   if "BEGIN PRIVATE KEY" in line:
     writeline=1
-    ovpnf.write("<key>")
-    ovpnf.write("-----BEGIN PRIVATE KEY-----\n")
+    ovpnf.write("<key>\n")
   if writeline==1:
     ovpnf.write(line)
   if "END PRIVATE KEY" in line:
     writeline=0
-    ovpnf.write("-----END PRIVATE KEY-----\n")
     ovpnf.write("</key>\n")
     break
 ovpnf.close()
