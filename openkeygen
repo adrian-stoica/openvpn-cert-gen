@@ -25,35 +25,39 @@ mute-replay-warnings
 cipher AES-256-CBC
 ns-cert-type server
 comp-lzo adaptive
-redirect-gateway def1'''
+redirect-gateway def1
+'''
 ovpnf.write(config)
 ovpnf.close()
 ovpnf=open(easyrsaPath+"keys/"+username+".ovpn","a")
 for line in caf:
   if "BEGIN CERTIFICATE" in line:
     writeline=1
-    ovpnf.write("<ca>\n\r-----BEGIN CERTIFICATE-----\n\r")
+    ovpnf.write("<ca>\n-----BEGIN CERTIFICATE-----\n")
   elif writeline==1:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n\r</ca>\n\r")
+    ovpnf.write("-----END CERTIFICATE-----\n</ca>\n")
+    break
 for line in crtf:
   if "BEGIN CERTIFICATE" in line:
     writeline=1
-    ovpnf.write("<cert>\n\r-----BEGIN CERTIFICATE-----\n\r")
+    ovpnf.write("<cert>\n-----BEGIN CERTIFICATE-----\n")
   elif writeline==1:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n\r</cert>\n\r")
+    ovpnf.write("-----END CERTIFICATE-----\n</cert>\n")
+    break
 for line in keyf:
   if "BEGIN CERTIFICATE" in line:
     writeline=1
-    ovpnf.write("<key>\n\r-----BEGIN CERTIFICATE-----\n\r")
+    ovpnf.write("<key>\n-----BEGIN CERTIFICATE-----\n")
   elif writeline==1:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n\r</key>\n\r")
+    ovpnf.write("-----END CERTIFICATE-----\n</key>\n")
+    break
 ovpnf.close()
