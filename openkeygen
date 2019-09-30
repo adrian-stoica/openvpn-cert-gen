@@ -38,7 +38,7 @@ for line in caf:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n</ca>\n")
+    ovpnf.write("-----END CERTIFICATE-----\n<\/ca>\n")
     break
 for line in crtf:
   if "BEGIN CERTIFICATE" in line:
@@ -48,7 +48,7 @@ for line in crtf:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n</cert>\n")
+    ovpnf.write("-----END CERTIFICATE-----\n<\/cert>\n")
     break
 for line in keyf:
   if "BEGIN CERTIFICATE" in line:
@@ -58,6 +58,6 @@ for line in keyf:
     ovpnf.write(line)
   elif "END CERTIFICATE" in line:
     writeline=0
-    ovpnf.write("-----END CERTIFICATE-----\n</key>\n")
+    ovpnf.write("-----END CERTIFICATE-----\n<\/key>\n")
     break
 ovpnf.close()
