@@ -38,7 +38,7 @@ redirect-gateway def1
 '''
 ovpnf.write(config)
 ovpnf.close()
-ovpnf=open(ovpnfilesPath+"keys/"+username+".ovpn","a")
+ovpnf=open(ovpnfilesPath+username+".ovpn","a")
 for line in caf:
   if "BEGIN CERTIFICATE" in line:
     writeline=1
