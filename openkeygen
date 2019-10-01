@@ -13,6 +13,9 @@ usermail = raw_input("Leave blank if you don`t want to send the configuration fi
 
 #Generate Keys
 genKeys = os.system("cd "+easyrsaPath+"; source ./vars; ./pkitool "+username)
+if genKeys != 0:
+  print('ERROR: keys no generated')
+  sys.exit(1)
 #Generate ovpn file
 ovpnf=open(ovpnfilesPath+username+".ovpn","w+")
 caf=open(easyrsaPath+"keys/ca.crt","r")
