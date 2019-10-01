@@ -7,14 +7,14 @@ if os.geteuid() != 0:
   sys.exit(1)
 
 easyrsaPath = "/etc/openvpn/easy-rsa/"
-ovpnfilesPath = "/var/www/ovpnfiles"
+ovpnfilesPath = "/var/www/ovpnfiles/"
 username = raw_input("Type the username: ")
 usermail = raw_input("Leave blank if you don`t want to send the configuration file via e-mail.\nType the e-mail address: ")
 
 #Generate Keys
 genKeys = os.system("cd "+easyrsaPath+"; source ./vars; ./pkitool "+username)
 #Generate ovpn file
-ovpnf=open(ovpnfilesPath+"keys/"+username+".ovpn","w+")
+ovpnf=open(ovpnfilesPath+username+".ovpn","w+")
 caf=open(easyrsaPath+"keys/ca.crt","r")
 crtf=open(easyrsaPath+"keys/"+username+".crt","r")
 keyf=open(easyrsaPath+"keys/"+username+".key","r")
