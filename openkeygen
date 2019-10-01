@@ -3,7 +3,7 @@ import os, sys
 
 #Check if root user is used
 if os.geteuid() != 0:
-  print('ERROR: Thist script must be run with root privileges!')
+  print('ERROR: Thist script must be run with root privileges!\nUse sudo in front of the command.')
   sys.exit(1)
 
 easyrsaPath = "/etc/openvpn/easy-rsa/"
